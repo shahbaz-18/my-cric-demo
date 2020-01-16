@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block contant %}
+{% load static %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .modal-header {display: ruby}
+</style>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Manage Teams   
+            </h1>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddTeam">Add Team</button>
+                            <input type="hidden" id='aaaa' class="btn btn-info btn-lg" data-toggle="modal" data-target="#TeamEdit">
+                        </div>
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped table-responsive">
+                                <thead style="background-color:#398bf7;">
+                                    <tr>
+                                        <th>Team Logo</th>
+                                        <th>Team Name</th>
+                                        <th>Club State</th>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in data %}
+                                    <tr>
+                                        <td><img src="{{media_path}}{{i.logo}}" style="width: 50px; height: 50px"></td>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.club_state}}</td>
+                                        <td>
+                                            <button onclick="teamedit('/cricket/team/detail/{{i.id}}/');"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                                            <button onclick="delete_team_detail('{{i.id}}');"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-12 col-12">
+        <div id="AddTeam" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content team-add-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Team</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form action="" method="post" enctype="multipart/form-data" id="add_team_form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <section id="steps-uid-1-p-0" role="tabpanel" aria-labelledby="steps-uid-1-h-0" class="body current" aria-hidden="false">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Team Name :</label>
+                                            <input type="text" class="form-control" value="" name="name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="your_name">Team Logo</label>
+                                            <input type="file" name="logo" accept="image/x-png,image/bmp,image/jpeg,image/jpg" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Club State :</label>
+                                            <input type="text" class="form-control" value="" name="club_state">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="modal-footer" style="width: 100%!important;">
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                            <input type="submit" style="float: right;" class="btn btn-info waves-effect" value="Save" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-12">
+        <div id="TeamEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog team-edit">
+                <div class="modal-content team-edit-content">
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id='selected_url' value="">
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(document).on("submit", "form#add_team_form", function(event) {
+            event.preventDefault();
+            var postData = new FormData(this);      
+            $.ajax({
+                async: false,
+                type: 'POST',
+                url: '/cricket/team/create/list/',
+                data: postData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  console.log(response);
+                  if (response.response.message == 'error'){
+                    alert(response.response.error);
+                  }else{
+                    location.reload();
+                  }
+                }
+            });
+        }); 
+
+        
+        $(document).on("submit", "form#update_team_form", function(event) {
+            event.preventDefault();      
+            var postData = new FormData(this);
+            $.ajax({
+                async: false,
+                type: 'PUT',
+                url: $('#selected_url').val(),
+                data: postData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  console.log(response);
+                  location.reload();
+                }
+            });
+        }); 
+    });
+    function delete_team_detail(id){
+        
+        $.ajax({
+            async: false,
+            type: 'DELETE',
+            url: '/cricket/team/detail/'+id+'/',
+            success: function(response) {
+                alert('deleted')
+              location.reload();
+            }
+        });        
+    }
+    
+    function teamedit(url){
+        $('#selected_url').val(url);
+        $.ajax({
+            type : 'GET',
+            url : url,
+            success: function(response){  
+                $('.team-edit-content').html(response); 
+                $('#aaaa').click();
+            }
+        });
+    }
+
+    </script>
+{% endblock %}

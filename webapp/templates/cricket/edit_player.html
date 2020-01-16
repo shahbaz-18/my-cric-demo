@@ -1,0 +1,85 @@
+{% load static %}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel2">Edit Player</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<form action="" method="post" enctype="multipart/form-data" id="update_player_form">
+    {% csrf_token %}
+    <div class="modal-body">
+        <section id="steps-uid-1-p-0" role="tabpanel" aria-labelledby="steps-uid-1-h-0" class="body current" aria-hidden="false">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>First Name :</label>
+                        <input type="text" class="form-control"  name="first_name" value="{{data.first_name}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Last Name :</label>
+                        <input type="text" class="form-control"  name="last_name" value="{{data.last_name}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="your_name">Profile Image</label>
+                        <img src='{{media_path}}{{data.profile_image}}' style='width: 50px; height: 50px'>
+                        <input type="file" name="profile_image" accept="image/x-png,image/bmp,image/jpeg,image/jpg" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Jersey Number :</label>
+                        <input type="text" class="form-control"  name="jursey_num" value="{{data.jersey_num}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Country :</label>{{data.country}}
+                        <select class="custom-select form-control edit_c" id="country_list" name="country">
+                            <option value="">Select</option>
+                            {% for item in data.country_list %} 
+                                {% if item.id == data.country %}
+                                    <option value="{{item.id}}" selected>{{item.name}}</option>
+                                 {% else %}
+                                    <option value="{{item.id}}">{{item.name}}</option>
+                                 {% endif %}
+
+                                
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Team :</label>
+                        <select class="custom-select form-control edit_t" id="team_list" name="team">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal-footer" style="width: 100%!important;">
+        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+        <input type="submit" style="float: right;" class="btn btn-info waves-effect" value="Update" />
+    </div>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.edit_c#country_list').val('{{data.country_id}}');
+$('.edit_t#team_list').val('{{data.team_id}}');
+});
+</script>

@@ -1,0 +1,374 @@
+{% extends "base.html" %}
+{% block contant %}
+{% load static %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .modal-header {display: ruby !important}
+    .modal-header .modal-title  {display: inline}
+    #country_list {height: auto;}
+    #team_list {height: auto;}
+    .rowbat, .rowball {margin-left: 0px; margin-right: 0px; }
+</style>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Manage Players
+            </h1>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddPlayer">Add Player</button>
+                            <input type="hidden" id='aaaa' class="btn btn-info btn-lg" data-toggle="modal" data-target="#PlayerEdit">
+                        </div>
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped table-responsive">
+                                <thead style="background-color:#398bf7;">
+                                    <tr>
+                                        <th>Player Name</th>
+                                        <th>Country</th>
+                                        <th>Team</th>
+                                        <th>Jersey Number</th>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in data %}
+                                    <tr>
+                                        <td><img src="{{media_path}}{{i.profile_image}}" style="width: 40px; height: 40px">  {{i.first_name}} {{i.last_name}}</td>
+                                        <td>{{i.country}}</td>
+                                        <td>{{i.team}}</td>
+                                        <td>{{i.jersey_num}}</td>
+                                        <td>
+                                            <button onclick="playeredit('/cricket/player/detail/{{i.id}}/');"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                                            <button onclick="delete_player_detail('{{i.id}}');"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-12 col-12">
+        <div id="AddPlayer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content player-add-content">
+                    <div class="modal-header" style="display: ruby">
+                        <h4 class="modal-title" id="myModalLabel">Add Player</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form action="" method="post" enctype="multipart/form-data" id="add_player_form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <section id="steps-uid-1-p-0" role="tabpanel" aria-labelledby="steps-uid-1-h-0" class="body current" aria-hidden="false">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>First Name :</label>
+                                            <input type="text" class="form-control" value="" name="first_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Last Name :</label>
+                                            <input type="text" class="form-control" value="" name="last_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="your_name">Profile Image</label>
+                                            <input type="file" name="profile_image" accept="image/x-png,image/bmp,image/jpeg,image/jpg" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Jursey Number :</label>
+                                            <input type="text" class="form-control" value="" name="club_state">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Country :</label>
+                                            <select class="custom-select form-control" id="country_list" name="country_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Team :</label>
+                                            <select class="custom-select form-control" id="team_list" name="team_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- <div class="modal-footer" style="width: 100%!important;">
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                            <input type="submit" style="float: right;" class="btn btn-info waves-effect" value="Save" />
+                        </div> -->
+                        <input type="hidden" name="batting_history" id="batting_history" value="{}" />
+                        <input type="hidden" name="bowling_history" id="bowling_history" value="{}" />
+                    
+                    <h4>Batting History: </h4>
+                    <div class="row rowbat">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Match Played :</label>
+                                <input type="text" class="form-control" value="" name="bt_match_played">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Ball Facd :</label>
+                                <input type="text" class="form-control" value="" name="ball_faced">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowbat">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Run Scored :</label>
+                                <input type="text" class="form-control" value="" name="bt_run">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Highest Score :</label>
+                                <input type="text" class="form-control" value="" name="highest_score">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowbat">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Fifties :</label>
+                                <input type="text" class="form-control" value="" name="fifties">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Hundreds :</label>
+                                <input type="text" class="form-control" value="" name="hundreds">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowbat">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Strike Rates :</label>
+                                <input type="text" class="form-control" value="" name="bt_strike_rate">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Average :</label>
+                                <input type="text" class="form-control" value="" name="bt_avgs">
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Bowling History: </h4>
+                    <div class="row rowball">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Match Played :</label>
+                                <input type="text" class="form-control" value="" name="bl_match_played">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Ball :</label>
+                                <input type="text" class="form-control" value="" name="ball">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowball">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Run :</label>
+                                <input type="text" class="form-control" value="" name="bl_run">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Wicket :</label>
+                                <input type="text" class="form-control" value="" name="wicket">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowball">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Best Bowling :</label>
+                                <input type="text" class="form-control" value="" name="best_bowling">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Economy :</label>
+                                <input type="text" class="form-control" value="" name="economy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowball">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Strike Rates :</label>
+                                <input type="text" class="form-control" value="" name="bl_strike_rate">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Average :</label>
+                                <input type="text" class="form-control" value="" name="bl_avgs">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="width: 100%!important;">
+                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                        <input type="submit" style="float: right;" class="btn btn-info waves-effect" value="Save" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-12">
+        <div id="PlayerEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog player-edit">
+                <div class="modal-content player-edit-content">
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id='selected_url' value="">
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: '/cricket/country/list/',
+            success: function(response) {
+                $('#country_list').html(response);
+            }
+        });
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: '/cricket/team/dd/list/',
+            success: function(response) {
+                $('#team_list').html(response);
+            }
+        });
+
+
+        $(".rowbat input").focusout(function(e) {
+              var batting_history = {};
+              $(".rowbat input").each(function(index) {
+                var name = $(this).attr('name');
+                var value = $(".rowbat input[name='"+name+"']").val();
+                batting_history[name] = value;                
+              });
+              
+               $("#batting_history").val(JSON.stringify(batting_history));
+               console.log(batting_history);
+               console.log(JSON.stringify(batting_history));
+            });
+        $(".rowball input").focusout(function(e) {
+              var bowling_history = {};
+              $(".rowball input").each(function(index) {
+                var name = $(this).attr('name');
+                var value = $(".rowball input[name='"+name+"']").val();
+                bowling_history[name] = value;                
+              });
+              
+               $("#batting_history").val(JSON.stringify(batting_history));
+               console.log(bowling_history)
+               console.log(JSON.stringify(bowling_history))
+            });
+
+        $(document).on("submit", "form#add_player_form", function(event) {
+            event.preventDefault();
+
+            alert('ssss');
+            var postData = new FormData(this);
+            $.ajax({
+                async: false,
+                type: 'POST',
+                dataType: 'json',
+                url: '/cricket/player/create/list/',
+                data: postData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  console.log(response);
+                  location.reload();
+                }
+            });
+        }); 
+
+        
+        $(document).on("submit", "form#update_player_form", function(event) {
+            event.preventDefault();      
+            var postData = new FormData(this);
+            $.ajax({
+                async: false,
+                type: 'PUT',
+                url: $('#selected_url').val(),
+                data: postData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  console.log(response);
+                  location.reload();
+                }
+            });
+        }); 
+    });
+    function delete_plaer_detail(id){
+        
+        $.ajax({
+            async: false,
+            type: 'DELETE',
+            url: '/cricket/player/detail/'+id+'/',
+            success: function(response) {
+                alert('deleted')
+              location.reload();
+            }
+        });        
+    }
+    
+    function playeredit(url){
+        $('#selected_url').val(url);
+        $.ajax({
+            type : 'GET',
+            url : url,
+            success: function(response){  
+                $('.player-edit-content').html(response); 
+                $('#aaaa').click();
+            }
+        });
+    }
+
+    </script>
+{% endblock %}

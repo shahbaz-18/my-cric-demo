@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>Cricket Demo</title>
+    
+	<!-- Bootstrap 4.0-->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap/dist/css/bootstrap.css' %}">
+	
+	<!-- Bootstrap 4.0-->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap/dist/css/bootstrap-extend.css' %}">
+	
+	<!-- theme style -->
+	<link rel="stylesheet" href="{% static 'css/master_style.css' %}">
+	
+	<!-- horizontal menu style -->
+	<link rel="stylesheet" href="{% static 'css/horizontal_menu_style.css' %}">
+	
+	<!-- Aries_admin skins. choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="{% static 'css/skins/_all-skins.css' %}">
+	
+	<!-- date picker -->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' %}">
+	
+	<!-- daterange picker -->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css' %}">
+	
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="{% static 'assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css' %}">
+   
+   	<link rel="stylesheet" href="{% static 'assets/vendor_components/morris.js/morris.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/Ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/linea-icons/linea.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/glyphicons/glyphicon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/flag-icon/css/flag-icon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor_components/material-design-iconic-font/css/materialdesignicons.css' %}">
+    
+
+    <style type="text/css">
+      .sidebar a.sidebar-menu {
+        color: #fff;
+        background-color: #5bc0de;
+        border-color: #46b8da;
+        font-size: 25px;
+        font-weight: bold;
+      }
+    </style> 
+  </head>
+
+<body class="hold-transition skin-blue layout-top-nav">
+  
+ <!-- <aside class="main-sidebar"> -->
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <a class="sidebar-menu" href="{% url 'team-create-list' %}">Manage Teams</a>
+      <a class="sidebar-menu" href="{% url 'player-create-list' %}">Manage Players</a>
+      <a class="sidebar-menu" href="{% url 'series-teams-list' %}">Series & Teams</a>
+      <a class="sidebar-menu" href="{% url 'matches-results-list' %}">Matches & Results</a>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+     </section>
+  <!-- </aside> -->
+</body>
+{%  block contant %}
+
+{% endblock %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-light">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="nav-item"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li class="nav-item"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-cog fa-spin"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Admin Birthday</h4>
+
+                <p>Will be July 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-yellow"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Jhone Updated His Profile</h4>
+
+                <p>New Email : jhone_doe@demo.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Disha Joined Mailing List</h4>
+
+                <p>disha@demo.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Code Change</h4>
+
+                <p>Execution time 15 Days</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Web Design
+                <span class="label label-danger pull-right">40%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 40%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Data
+                <span class="label label-success pull-right">75%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 75%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Order Process
+                <span class="label label-warning pull-right">89%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 89%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Development 
+                <span class="label label-primary pull-right">72%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 72%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <input type="checkbox" id="report_panel" class="chk-col-grey" >
+			<label for="report_panel" class="control-sidebar-subheading ">Report panel usage</label>
+
+            <p>
+              general settings information
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="allow_mail" class="chk-col-grey" >
+			<label for="allow_mail" class="control-sidebar-subheading ">Mail redirect</label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="expose_author" class="chk-col-grey" >
+			<label for="expose_author" class="control-sidebar-subheading ">Expose author name</label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <input type="checkbox" id="show_me_online" class="chk-col-grey" >
+			<label for="show_me_online" class="control-sidebar-subheading ">Show me as online</label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="off_notifications" class="chk-col-grey" >
+			<label for="off_notifications" class="control-sidebar-subheading ">Turn off notifications</label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">              
+              <a href="javascript:void(0)" class="text-red margin-r-5"><i class="fa fa-trash-o"></i></a>
+              Delete chat history
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  
+</div>
+<!-- ./wrapper -->
+  	
+	
+	<!-- jQuery 3 -->
+	<script src="{% static 'assets/vendor_components/jquery/dist/jquery.js' %}"></script>
+	
+	<!-- jQuery UI 1.11.4 -->
+	<script src="{% static 'assets/vendor_components/jquery-ui/jquery-ui.js' %}"></script>
+	
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+	  $.widget.bridge('uibutton', $.ui.button);
+	</script>
+	
+	<!-- popper -->
+	<!-- <script src="{% static 'assets/vendor_components/popper/dist/popper.min.js' %}"></script> -->
+	
+	<!-- Bootstrap 4.0-->
+	<!-- <script src="{% static 'assets/vendor_components/bootstrap/dist/js/bootstrap.js' %}"></script>	 -->
+	
+	<!-- ChartJS -->
+	<script src="{% static 'assets/vendor_components/chart-js/chart.js' %}"></script>
+	
+	<!-- Sparkline -->
+	<script src="{% static 'assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.js' %}"></script>
+	
+	<!-- daterangepicker -->
+	<script src="{% static 'assets/vendor_components/moment/min/moment.min.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+	
+	<!-- datepicker -->
+	<script src="{% static 'assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
+	
+	<!-- Bootstrap WYSIHTML5 -->
+	<script src="{% static 'assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js' %}"></script>
+	
+	<!-- Slimscroll -->
+	<script src="{% static 'assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+	
+	<!-- FastClick -->
+	<script src="{% static 'assets/vendor_components/fastclick/lib/fastclick.js' %}"></script>
+	
+	<!-- peity -->
+	<script src="{% static 'assets/vendor_components/jquery.peity/jquery.peity.js' %}"></script>
+	
+	<!-- Aries_admin App -->
+	<script src="{% static 'js/template.js' %}"></script>
+	
+	<!-- Aries_admin horizontal-layout -->
+	<script src="{% static 'js/horizontal-layout.js' %}"></script>
+	
+	<!-- Aries_admin dashboard demo (This is only for demo purposes) -->
+	<!-- <script src="{% static 'js/pages/dashboard.js' %}"></script> -->
+	
+	<!-- Aries_admin for demo purposes -->
+	<!-- <script src="{% static 'js/demo.js' %}"></script> -->
+ <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.cookie.min.js' %}"></script>
+    
+
+
+  <!--  -->  
+<!-- Dat-table -->
+	<!-- <script src="{% static 'assets/vendor_components/jquery/dist/jquery.min.js' %}"></script> -->
+	<!-- <script src="{% static 'assets/vendor_components/bootstrap/dist/js/bootstrap.min.js' %}"></script> -->
+	<script src="{% static 'assets/vendor_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js' %}"></script>
+    <!-- <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/ex-js/pdfmake.min.js' %}"></script> -->
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/ex-js/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'js/pages/data-table.js' %}"></script>
+  	<script src="{% static 'assets/vendor_components/raphael/raphael.min.js' %}"></script>
+  <script src="{% static 'assets/vendor_components/morris.js/morris.min.js' %}"></script>
+</body>
+</html>

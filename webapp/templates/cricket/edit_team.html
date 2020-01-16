@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel2">Edit Team</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<form action="" method="POST" enctype="multipart/form-data" id="update_team_form">
+    {% csrf_token %}
+  <div class="modal-body">
+      <section id="steps-uid-1-p-0" role="tabpanel" aria-labelledby="steps-uid-1-h-0" class="body current" aria-hidden="false">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Team Name :</label>
+                        <input type="text" class="form-control" value="{{data.name}}" name="name" id="name">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="your_name">Team Logo</label>
+                        <img src='{{media_path}}{{data.logo}}' style='width: 50px; height: 50px'>
+                        <input type="file" name="logo" accept="image/x-png,image/bmp,image/jpeg,image/jpg" class="btn btn-primary" id="logo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Club State :</label>
+                        <input type="text" class="form-control" value="{{data.club_state}}" name="club_state" id="club_state">
+                    </div>
+                </div>
+            </div>
+        </section>
+  </div>
+    <div class="modal-footer" style="width: 100%!important;">
+        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+        <input type="submit" style="float: right;" class="btn btn-info waves-effect" value="Update" />
+    </div>
+</form>
